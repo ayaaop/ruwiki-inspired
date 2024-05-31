@@ -1,11 +1,57 @@
-:root {
+/* General page layout */
+.theme-fandomdesktop-light {
     --theme-body-background-color: var(--theme-page-background-color--secondary);
     --theme-community-header-color: var(--theme-page-text-color);
     --theme-community-header-color--hover: var(--theme-page-text-color--hover);
 }
 #TU-Module,
-.global-navigation {
+.global-navigation,
+.rail-recentImages-module,.CategorySelect.articlePage .special-categories-label,.page-footer__categories .wds-collapsible-panel__header .wds-icon {
     display: none;
+}
+.page-footer__categories.wds-collapsible-panel .wds-collapsible-panel__content {
+	display: block;
+	width: 100%;
+}
+.page-footer__categories.wds-collapsible-panel {
+	display:flex;
+	flex-direction:row;
+	gap:16px;
+}
+.page-footer__categories .wds-collapsible-panel__header,.CategorySelect.articlePage .hidden-categories-label {
+	display:block;
+font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  margin: 0;
+  padding: 6px 0;
+	pointer-events:none;
+}
+.CategorySelect.articlePage .hidden-categories-label {
+	margin-right:16px;
+}
+.CategorySelect.articlePage .categories {
+	display: flex;
+  flex-wrap: wrap;
+	gap:8px;
+}
+.CategorySelect.articlePage .category {
+	border-right: none;
+	padding-right: 0;
+	margin:0;
+}
+.page-footer__categories .category a,.CategorySelect.articlePage .add,.CategorySelect.articlePage.editMode input,.toggle-hidden-categories {
+	padding: 6px 16px;
+	border-radius: 50px;
+	background-color: var(--theme-page-background-color);
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.25rem;
+	display:block;
+	color:var(--theme-page-text-color);
+	border:0;
+	text-transform:none;
+	cursor:pointer;
 }
 .main-container {
     margin: 0;
@@ -18,7 +64,7 @@
     left: 18px;
     bottom: 18px
 }
-.fandom-community-header__background {
+.fandom-community-header__background:not(.header) {
     position: relative;
     display: none;
 }
@@ -26,6 +72,12 @@
     width: 100%;
 }
 .resizable-container {
+    margin: 0 64px;
+    width: 100%;
+    max-width: calc(100vw - 128px);
+	transition:.2s;
+}
+.is-content-expanded .resizable-container {
     margin: 0 32px;
     width: 100%;
     max-width: calc(100vw - 64px);
@@ -36,13 +88,13 @@
     padding: 0;
 }
 html:not(.ve-active) .page.has-right-rail {
-    display: flex;
     width: 100%;
 }
-.page__main {
-    flex: 1;
+.page .page__main {
+	padding:0;
+	margin:0;
 }
-.right-rail-visible .page__main {
+.has-right-rail .page__main {
     margin-right: 18px;
 }
 .page-content {
@@ -63,30 +115,49 @@ html:not(.ve-active) .page.has-right-rail {
     margin-top: 0;
     padding-top: 0;
 }
-.page-content h2 {
-    padding: 0 0 18px;
+.page-content .mw-parser-output h2:not([id], [class]) {
+    padding: 0;
     font-size: 1.75rem;
-    margin: 0;
+    margin: 0 0 18px;
     border: 0;
+	display:flex;
+}
+.page-content .mw-parser-output h2:not([id], [class]) .mw-headline {
+flex:1;
 }
 .page-content .wds-list {
     list-style-type: none;
     margin: 0;
 }
+.page .page__right-rail:not(.is-rail-hidden) {
+    overflow-y: unset;
+}
+html:not(.ve-active) .page.has-right-rail .page__right-rail {
+    min-width: 420px;
+}
+html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
+    min-width: 20px;
+}
+
+.main-page-tag-lcs-exploded {
+	float: none;
+	display:inline-block;
+}
+
+/* Article section styles */
 .page-content section.article-section,
 .rail-module,
 .page-content section.preamble-section {
     background-color: var(--theme-page-background-color);
     padding: 32px;
     overflow-y: unset;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
+	transition:.5s;
 }
-.mainpage .preamble-section {
-    overflow-y: hidden;
+.page-footer {
+    border-radius: 16px;
 }
-.page .page__right-rail:not(.is-rail-hidden) {
-    overflow-y: unset;
-}
+
 .page-content section.preamble-section {
     margin-bottom: 24px;
     border-radius: 16px;
@@ -96,20 +167,19 @@ html:not(.ve-active) .page.has-right-rail {
 }
 .page-content section.article-section:last-child {
     border-radius: 0 0 16px 16px;
+    margin-bottom: 24px;
+}
+.mainpage section.article-section {
+	position:relative;
 }
 
-html:not(.ve-active) .page.has-right-rail .page__right-rail {
-    min-width: 420px;
-}
-html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
-    min-width: 20px;
-}
+/* Right rail */
 .right-rail-wrapper {
     padding: 0;
 }
 .right-rail-visible .rail-module {
     border: none;
-    margin: 0 0 18px;
+    margin: 0 0 18px!important;
     width: 100%;
     border-radius: 16px;
     padding: 16px;
@@ -128,6 +198,20 @@ html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
 .right-rail-toggle {
     z-index: 11;
 }
+.rail-module__list.is-condensed-list {
+    grid-gap: 3px;
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.rail-module__list > li {
+    width: 49%;
+}
+.rail-module__list > li.activity-item {
+    width: 100%;
+}
+
+/* Table of Contents in the right rail */
 .toc.rail-module {
     position: sticky!important;
     z-index: 10;
@@ -138,7 +222,7 @@ html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
     display: block;
 }
 .toc.rail-module.scrolled {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 7px 29px 0px;
 }
 .toc.rail-module .toctitle {
     padding: 16px 0;
@@ -158,19 +242,11 @@ html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
     padding-bottom: 0;
 }
 
-.rail-module__list.is-condensed-list {
-    grid-gap: 3px;
-    font-size: 13px;
-    display: flex;
-    flex-wrap: wrap;
+/* Infobox in the right rail */
+.portable-infobox.rail-module {
+	height:auto;
+	width:auto;
 }
-.rail-module__list > li {
-    width: 49%;
-}
-.rail-module__list > li.activity-item {
-    width: 100%;
-}
-
 .portable-infobox.rail-module .pi-title,
 .portable-infobox.rail-module .pi-header {
     text-align: center;
@@ -186,3 +262,10 @@ html:not(.ve-active) .page.has-right-rail .page__right-rail.is-rail-hidden {
 .portable-infobox.rail-module .pi-group {
 	margin-top:.5rem;
 }
+
+/* Dark theme improvements */
+/*.theme-fandomdesktop-dark .page-content section.article-section,
+.theme-fandomdesktop-dark .rail-module,
+.theme-fandomdesktop-dark .page-content section.preamble-section,.theme-fandomdesktop-dark .page-footer__categories .category a,.theme-fandomdesktop-dark .CategorySelect.articlePage .add,.theme-fandomdesktop-dark .CategorySelect.articlePage.editMode input {
+	background-color:color-mix(in srgb, var(--theme-page-background-color--secondary), var(--theme-page-background-color) 40%)
+}*/
