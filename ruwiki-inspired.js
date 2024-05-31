@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Fandom Article Formatter
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.9
 // @description  Format Fandom articles and check the ToC checkbox
 // @author       copilot and gpt4o
 // @match        *://*.fandom.com/*
